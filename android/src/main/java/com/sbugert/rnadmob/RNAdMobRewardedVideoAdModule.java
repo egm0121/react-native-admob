@@ -1,5 +1,6 @@
 package com.sbugert.rnadmob;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
@@ -19,6 +20,9 @@ import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.AdRequest;
+import com.pollfish.mediation.PollfishAdMobAdapter;
+import com.pollfish.mediation.PollfishExtrasBundleBuilder;
+
 
 import java.util.ArrayList;
 
@@ -160,8 +164,9 @@ public class RNAdMobRewardedVideoAdModule extends ReactContextBaseJavaModule imp
                             adRequestBuilder.addTestDevice(testDevice);
                         }
                     }
-
-                    AdRequest adRequest = adRequestBuilder.build();
+                    Bundle pollfishBundle = new PollfishExtrasBundleBuilder().build();
+                    AdRequest adRequest = adRequestBuilder
+                            .addNetworkExtrasBundle(PollfishAdMobAdapter.class, pollfishBundle).build();
                     mRewardedVideoAd.loadAd(adUnitID, adRequest);
                 }
             }
